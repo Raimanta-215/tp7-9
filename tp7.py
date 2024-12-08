@@ -24,11 +24,11 @@ class Fraction:
                 -ValueError: si den est nul
         """
         if not isinstance(num, int):
-            raise TypeError('Numerator must be an integer')
+            raise TypeError('Numerator doit etre un entier')
         if not isinstance(den, int):
-            raise TypeError('Denominator must be an integer')
+            raise TypeError('Denominator doit etre un entier')
         if den == 0:
-            raise ValueError("Denominator cannot be 0")
+            raise ValueError("Denominator ne peut pas être 0")
         self.__num = num
         self.__den = den
 
@@ -313,4 +313,27 @@ class Fraction:
         return num_diff == 1 and den_diff > 1
 
 
+if __name__ == "__main__":
+    x = Fraction(1,2)
+    y = Fraction(-2,35)
+
+    print(x)
+    print(f"{x} + {y} = {x+y}")
+    print(f"{x} - {y} = {x-y}")
+    print(f"{x} * {y} = {x*y}")
+    print(f"{x} / {y} = {x / y}")
+    print(f"{x} ** {6} = {x ** 6}")
+    print(f"fraction {x}  est zéro : {x.is_zero()}")
+    print(f"fraction {x} est un entier : {x.is_integer()}")
+    print(f'fraction {x} est un mixed nnumber : {x.as_mixed_number()}')
+
+    try:
+        z = Fraction(1,"2")
+    except TypeError as e:
+        print(e)
+
+    try:
+        w = Fraction(1,0)
+    except ValueError as e:
+        print(e)
 
