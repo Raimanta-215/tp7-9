@@ -1,17 +1,22 @@
 def plus_grand_den_commun(a, b):
-    while b != 0 :
-        a,b = b, a%b
+    if b == 0:
+        raise ValueError("den ne peut pas être 0")
+    while b != 0:
+        a, b = b, a % b
     return abs(a)
 
 class Fraction:
     """Class representing a fraction and operations on it
 
+
     Author : V. Van den Schrieck
     Date : October 2021
     This class allows fraction manipulations through several operations.
+
+
     """
 
-    def __init__(self,num=0, den=1):
+    def __init__(self, num=0, den=1):
         """This builds a fraction based on some numerator and denominator.
 
         PRE : - num : numérateur doit être un entier
@@ -31,8 +36,6 @@ class Fraction:
             raise ValueError("Denominator ne peut pas être 0")
         self.__num = num
         self.__den = den
-
-
         if self.__num < 0 < self.__den:
             self.__den = abs(self.__den)
         elif self.__den < 0 < self.__num:
@@ -41,18 +44,11 @@ class Fraction:
         elif self.__den < 0 and self.__num < 0:
             self.__num = abs(self.__num)
             self.__den = abs(self.__den)
-
-
         self.simplifie()
-
-
-
-
 
     @property
     def numerator(self):
         return self.__num
-
 
     @property
     def denominator(self):
@@ -67,7 +63,7 @@ class Fraction:
 
 # ------------------ Textual representations ------------------
 
-    def __str__(self) :
+    def __str__(self):
         """Return a textual representation of the reduced form of the fraction
 
         PRE : -
@@ -82,7 +78,7 @@ class Fraction:
         else:
             return f"{self.numerator}/{self.denominator}"
 
-    def as_mixed_number(self) :
+    def as_mixed_number(self):
         """Return a textual representation of the reduced form of the fraction as a mixed number
 
         A mixed number is the sum of an integer and a proper fraction
@@ -99,7 +95,7 @@ class Fraction:
         q = abs(self.numerator) // self.denominator
         r = abs(self.numerator) % self.denominator
 
-        if self.numerator < 0 :
+        if self.numerator < 0:
             return f"{-q} {r}/{self.denominator}"
         if r == 0:
             return str(q)
@@ -115,6 +111,8 @@ class Fraction:
 
     def __add__(self, other):
         """Overloading of the + operator for fractions
+
+
          PRE : - self doit être une instance Fraction
                 - other peut être une Fraction ou un entier
          POST : - retourne une fraction qui est le resultat de l'addition simplifié
@@ -181,7 +179,7 @@ class Fraction:
             den = self.denominator * other_frac.denominator
         else:
             raise TypeError('opération possible que entre une Fraction et une Fraction ou un entier')
-        return Fraction(num,den)
+        return Fraction(num, den)
 
 
     def __truediv__(self, other):
@@ -224,7 +222,7 @@ class Fraction:
             for i in range(other - 1):
                 result *= self
             return result
-        elif other < 0 :
+        elif other < 0:
             new_num = self.denominator
             new_den = self.numerator
             new = Fraction(new_num, new_den)
@@ -244,9 +242,9 @@ class Fraction:
             prod1 = self.numerator * other.denominator
             prod2 = other.numerator * self.denominator
             return prod1 == prod2
-        elif isinstance(other,int):
+        elif isinstance(other, int):
             return self.numerator == other * self.denominator
-        elif isinstance(other,float):
+        elif isinstance(other, float):
             return self.__float__() == other
         return False
 
@@ -314,8 +312,8 @@ class Fraction:
 
 
 if __name__ == "__main__":
-    x = Fraction(1,2)
-    y = Fraction(-2,35)
+    x = Fraction(1, 2)
+    y = Fraction(-2, 4)
 
     print(x)
     print(f"{x} + {y} = {x+y}")
@@ -326,14 +324,16 @@ if __name__ == "__main__":
     print(f"fraction {x}  est zéro : {x.is_zero()}")
     print(f"fraction {x} est un entier : {x.is_integer()}")
     print(f'fraction {x} est un mixed nnumber : {x.as_mixed_number()}')
+    print(f"fraction {x} est adjacents à {y}: {x.is_adjacent_to(y)}")
+    print(f" {x} = {y} : {x == y}")
+    print(f" {x} = {float(x)}")
 
     try:
-        z = Fraction(1,"2")
+        z = Fraction(1, "2")
     except TypeError as e:
         print(e)
 
     try:
-        w = Fraction(1,0)
+        w = Fraction(1, 0)
     except ValueError as e:
         print(e)
-
